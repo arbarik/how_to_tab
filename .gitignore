@@ -1,0 +1,4 @@
+#WebStorm git ignore files
+
+.idea/workspace.xml
+.DS_Store
