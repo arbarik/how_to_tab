@@ -5,54 +5,18 @@
 (function(){
     "use strict"
 
-    jake.addListener('complete', function () {
-        console.log("jake completed");
-        process.exit();
-    });
-
-    console.log("BUILD OK");
+    var EXPECTED_NODE_VERSION="v4.2.1";
     desc("This is default build")
     task("default", function(){
-        console.log("default build");
+        console.log("\n\nBUILD OK");
     });
 
-    desc('This creates the bar directory for use with the foo-minified.js file-task.');
-    directory('bar');
+    desc("check node version")
+    task("version", function(){
+        var actualNodeVersion = process.version;
+        if(EXPECTED_NODE_VERSION !== actualNodeVersion)
+            fail("Incorrect node version: Expected "+ EXPECTED_NODE_VERSION +" actual "+ actualNodeVersion);
 
-    desc('This builds a minified JS file for production.');
-    file('foo-minified.js', ['bar', 'foo-bar.js', 'foo-baz.js'], function () {
-        // Code to concat and minify goes here
-    });
+    })
 
-    namespace('foo', function () {
-        desc('This the foo:bar task');
-        task('bar', function () {
-            console.log('doing foo:bar task');
-        });
-
-        desc('This the foo:baz task');
-        task('baz', ['default', 'foo:bar'], function () {
-            console.log('doing foo:baz task');
-        });
-    });
-
-    desc('This is an awesome task.');
-    task('awesome', function (a, b, c) {
-        console.log(a, b, c);
-    });
-
-    desc('This is an awesome process task.');
-    task('awesomeprocess', function (a, b, c) {
-        console.log(a, b, c);
-        console.log(process.env.qux, process.env.frang);
-    });
-
-
-
-    desc('Calls the foo:bar task and its prerequisites.');
-    task('invokeFooBar', function () {
-        // Calls foo:bar and its prereqs
-        jake.Task['awesome'].invoke();
-
-    });
 })()
