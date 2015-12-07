@@ -1,4 +1,9 @@
-#WebStorm git ignore files
-
-.idea/workspace.xml
+#MAC files
 .DS_Store
+
+
+#WebStorm git ignore files
+.idea/workspace.xml
+
+#node ignore files
+node_modules/**/.bin
